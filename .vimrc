@@ -1,6 +1,7 @@
 syntax on
 
 set number
+set relativenumber
 set ruler
 set noerrorbells
 set nu
@@ -12,12 +13,14 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
+set path+=**
+set wildmenu
 
 highlight MoreThan80 ctermbg=blue guibg=blue
 :2match MoreThan80 /\%81v.\+/
 
 call plug#begin('~/.vim/plugged')
-Plug 'preservim/nerdtree'
+	Plug 'preservim/nerdtree'
 call plug#end()
 
 map <C-n> :NERDTreeToggle<CR>
