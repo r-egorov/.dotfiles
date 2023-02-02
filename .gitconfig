@@ -1,0 +1,21 @@
+[user]
+	email = r-egorov@outlook.com
+	name = Ruslan Egorov
+
+[core]
+	autocrlf = input
+	editor = vim
+
+[pull]
+	merge = preserve
+	rebase = merges
+
+[merge]
+	ff = false
+
+[rerere]
+	enabled = false
+
+[push]
+	default = simple
+
