@@ -11,7 +11,13 @@ call plug#begin()
 
   " LSP
   Plug 'neovim/nvim-lspconfig'
+
+  " Icons!
+  Plug 'ryanoasis/vim-devicons'
 call plug#end()
+
+" Devicons
+set guifont=JetBrainsMono_Nerd_Font:h11
 
 " General configuration
 set number
@@ -31,6 +37,8 @@ filetype plugin indent on
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+
+nnoremap <A-h> <C-O>
 
 " Colorscheme
 let g:miramare_transparent_background = 0
