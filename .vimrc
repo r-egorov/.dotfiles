@@ -3,9 +3,8 @@ call plug#begin()
   Plug 'preservim/nerdtree'
 
   " Color schemes
-  Plug 'dracula/vim', { 'as': 'dracula' }
+  Plug 'morhetz/gruvbox'  " colorscheme gruvbox
   Plug 'franbach/miramare'
-  Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
   " Erlang plugins
   Plug 'vim-erlang/vim-erlang-tags'         , { 'for': 'erlang' }
@@ -41,7 +40,6 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
 " Colorscheme
-set termguicolors
 let g:miramare_transparent_background = 0
 colorscheme miramare
 
