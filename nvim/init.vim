@@ -23,22 +23,29 @@ set guifont=JetBrainsMono_Nerd_Font:h11
 set number
 set relativenumber
 set ruler
-set nowrap
 set smartindent
 set visualbell
 set t_vb=
 set wrap
+" set nowrap
 set linebreak
+set colorcolumn=79
 syntax on
 filetype on
 filetype plugin indent on
+
+" PHP identation
+autocmd FileType php setlocal tabstop=4 shiftwidth=4 expandtab
 
 " NERDTree mappings
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
+" Move cursor to older/newer position (I use it when
+" I need to move after goint to definition, etc.)
 nnoremap <A-h> <C-O>
+nnoremap <A-l> <C-I>
 
 " Colorscheme
 let g:miramare_transparent_background = 0
@@ -97,7 +104,7 @@ require'lspconfig'.stylelint_lsp.setup{
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', }
+local servers = { 'pyright' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
