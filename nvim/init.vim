@@ -3,31 +3,46 @@ call plug#begin()
   Plug 'preservim/nerdtree'
 
   " Color schemes
-  Plug 'morhetz/gruvbox'  " colorscheme gruvbox
+  Plug 'morhetz/gruvbox'
   Plug 'franbach/miramare'
 
   " Elixir plugins
   Plug 'elixir-editors/vim-elixir' , { 'for': 'elixir' }
+  Plug 'pangloss/vim-javascript' , { 'for': 'elixir' }
 
-  " LSP
+  " LSP and autocompletion
   Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/nvim-cmp'
 
   " Icons!
   Plug 'ryanoasis/vim-devicons'
+
+  " Fuzzy find
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
 " Devicons
 set guifont=JetBrainsMono_Nerd_Font:h11
 
 " General configuration
+set completeopt=menuone,noinsert,noselect
 set number
 set relativenumber
 set ruler
+set splitright
+set splitbelow
+set ignorecase
+set smartcase
 set smartindent
 set visualbell
 set t_vb=
-set wrap
-" set nowrap
+" set wrap
+set nowrap
 set linebreak
 set colorcolumn=79
 syntax on
@@ -40,16 +55,22 @@ autocmd FileType php setlocal tabstop=4 shiftwidth=4 expandtab
 " NERDTree mappings
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
 
 " Move cursor to older/newer position (I use it when
-" I need to move after goint to definition, etc.)
+" I need to move after I went to definition, etc.)
 nnoremap <A-h> <C-O>
 nnoremap <A-l> <C-I>
 
 " Colorscheme
-let g:miramare_transparent_background = 0
-colorscheme miramare
+" let g:miramare_transparent_background = 0
+set termguicolors
+colorscheme gruvbox
+
+" Telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 lua << EOF
 -- Set completeopt to have a better completion experience
@@ -90,6 +111,22 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
+local cmp = require'cmp'
+
+cmp.setup {
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  }, {
+    { name = 'buffer' },
+  })
+}
 
 -- Stylelint format after save
 require'lspconfig'.stylelint_lsp.setup{
@@ -104,10 +141,13 @@ require'lspconfig'.stylelint_lsp.setup{
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright' }
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local servers = { 'pyright', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
+    capabilities = capabilities,
     flags = {
       debounce_text_changes = 150,
     }
