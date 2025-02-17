@@ -178,3 +178,6 @@ require("codecompanion").setup({
   },
 })
 EOF
+
+" CodeCompanion Mappings
+nnoremap <leader>cc :CodeCompanionChat Toggle<CR>
