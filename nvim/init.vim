@@ -24,6 +24,10 @@ call plug#begin()
   " Fuzzy find
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
+
+  " CodeCompanion
+  Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'olimorris/codecompanion.nvim'
 call plug#end()
 
 " Devicons
@@ -153,4 +157,24 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+require("codecompanion").setup({
+  strategies = {
+    chat = {
+      adapter = "gemini",
+    },
+    inline = {
+      adapter = "gemini",
+    },
+  },
+  adapters = {
+    gemini = function()
+      return require("codecompanion.adapters").extend("gemini", {
+        env = {
+          api_key = "gemini_api_key"
+        },
+      })
+    end,
+  },
+})
 EOF
