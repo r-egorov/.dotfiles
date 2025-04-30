@@ -46,7 +46,7 @@ set smartcase
 set smartindent
 set visualbell
 set t_vb=
-" set wrap
+set wrap
 set nowrap
 set linebreak
 set colorcolumn=79
@@ -77,9 +77,22 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" CodeCompanion Mappings
+nnoremap <leader>cc :CodeCompanionChat Toggle<CR>
+
+" Set JavaScript indentation to 2 spaces
+autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd FileType javascriptreact setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd FileType typescript setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd FileType typescriptreact setlocal tabstop=2 shiftwidth=2 expandtab
+
+" Set HTML indentation to 2 spaces
+autocmd FileType html setlocal tabstop=2 shiftwidth=2 expandtab
+
+" Set CSS indentation to 2 spaces
+autocmd FileType css setlocal tabstop=2 shiftwidth=2 expandtab
+
+" Import lua configs
 luafile ~/.config/nvim/config/lsp.lua
 luafile ~/.config/nvim/config/codecompanion.lua
 luafile ~/.config/nvim/config/options.lua
-
-" CodeCompanion Mappings
-nnoremap <leader>cc :CodeCompanionChat Toggle<CR>
