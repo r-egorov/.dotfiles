@@ -1,8 +1,0 @@
-require("config.options")
-require("config.keymaps")
-require("config.plugins")
-require("config.lsp.init")
-require("config.colorscheme")
-require("config.codecompanion")
-require("config.filetypes")
-require("config.telescope")
